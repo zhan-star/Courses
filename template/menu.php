@@ -23,8 +23,8 @@
             <li <?=($_SERVER['PHP_SELF']=='/list-pin.php')?'class="active"':'';?>>
                 <a href="list-pin.php"><i class="fa fa-users"></i><span>Расписание</span></a>
             </li>
-            <li <?=($_SERVER['PHP_SELF']=='/list-special.php')?'class="active"':'';?>>
-                <a href="list-special.php"><i class="fa fa-users"></i><span>Наполнение групп</span></a>
+            <li <?=($_SERVER['PHP_SELF']=='/list-filling.php')?'class="active"':'';?>>
+                <a href="list-filling.php"><i class="fa fa-users"></i><span>Наполнение групп</span></a>
             </li>
             </li>
         </ul>

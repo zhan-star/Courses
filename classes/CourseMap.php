@@ -60,7 +60,7 @@ class CourseMap extends BaseMap
         return false;
     }
     public function findAll($ofset=0, $limit=30){
-        $res = $this->db->query("SELECT course.course_id, course.name, course.coursetype, p.datestart, p.dateend, course.days, p.price FROM course
+        $res = $this->db->query("SELECT course.course_id, course.name, course.coursetype, p.datestart, p.dateend, course.days, p.price, course.counts FROM course
         INNER JOIN pin p ON course.course_id = p.course_id ". "LIMIT $ofset,$limit");
         return $res->fetchAll(PDO::FETCH_OBJ);
     }
