@@ -35,7 +35,7 @@ require_once 'template/header.php';
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>Номер закрепления</th>
+                            <th>№</th>
                             <th>Преподаватель</th>
                             <th>Название курса</th>
                             <th>Начало</th>

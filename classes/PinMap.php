@@ -60,6 +60,7 @@ class PinMap extends BaseMap
         }
         return false;
     }
+    
     public function setTeacherId(){ 
             $res = $this->db->query("SELECT teacher.teacher_secondary from teacher
             INNER JOIN user u ON teacher.teacher_id = u.user_id

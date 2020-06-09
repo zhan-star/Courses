@@ -3,6 +3,7 @@ require_once 'secure.php';
 if (isset($_GET['id'])) {
     $id = Helper::clearInt($_GET['id']);
     $course = (new CourseMap())->findViewById($id);
+    $courseMap = new CourseMap();
     $header = 'Просмотр доступных курсов';
     require_once 'template/header.php';
     ?>
@@ -18,7 +19,12 @@ if (isset($_GET['id'])) {
                     </ol>
                 </section>
                 <div class="box-body">
+                    <?php 
+                        $earlier = new DateTime($course->datestart);
+                        $later = new DateTime($course->dateend);
 
+                        $diff = $later->diff($earlier)->format("%a");
+                    ?>
                     <table class="table table-bordered table-hover">
                         <tr>
                             <th>Название</th>
@@ -30,11 +36,11 @@ if (isset($_GET['id'])) {
                         </tr>
                         <tr>
                             <th>Длительность</th>
-                            <td><?=$course->days;?> д.</td>
+                            <td><?=$diff;?> д.</td>
                         </tr>
                         <tr>
                             <th>В данный момент на курсе</th>
-                            <td><?=$course->cnts;?> человек(-а)</td>
+                            <td><?=$courseMap->findAll2($course->course_id)[0];?> человек(-а)</td>
                         </tr>
                     </table>
                 </div>

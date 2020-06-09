@@ -53,20 +53,46 @@ class CourseMap extends BaseMap
     }*/
     public function findViewById($id=null){
         if ($id) {
-            $res = $this->db->query("SELECT course.course_id, course.name, course.coursetype, (SELECT COUNT(*) FROM courses.student_ticket st WHERE st.ticket_id = course.course_id) AS cnts, p.datestart, p.dateend, course.days, p.price FROM course
-            INNER JOIN pin p ON course.course_id = p.course_id
-             " . "WHERE course.course_id = $id
-             ORDER BY p.course_id
-             ");
+            $res = $this->db->query("SELECT course.course_id, course.name, course.coursetype, (SELECT COUNT(*) FROM courses.student_ticket st WHERE st.ticket_id = course.course_id) AS cnts, p.datestart, p.dateend, p.price FROM course
+            INNER JOIN pin p ON course.course_id = p.course_id WHERE course.course_id = $id
+            ORDER BY p.course_id ");
             return $res->fetch(PDO::FETCH_OBJ);
         }
         return false;
     }
+    public function findGroup($id=null){
+        if ($id) {
+            $res = $this->db->query("SELECT CONCAT(USER.lastname,' ',USER.firstname,' ',USER.patronymic) AS fio FROM user 
+            INNER JOIN student s ON user.user_id = s.student_id
+            INNER JOIN student_ticket st ON s.student_id = st.student_id
+            inner join ticket t ON st.ticket_id = t.ticket_id
+            INNER JOIN pin p ON t.pin_id = p.pin_id
+            INNER JOIN course c ON p.course_id = c.course_id
+            WHERE p.course_id='$id'");
+            return $res->fetchAll(PDO::FETCH_OBJ);
+        }
+        return false;
+    }
+    
     public function findAll($ofset=0, $limit=30){
-        $res = $this->db->query("SELECT course.course_id, course.name, course.coursetype, (SELECT COUNT(*) FROM courses.student_ticket st WHERE st.ticket_id = course.course_id) AS cnts, p.datestart, p.dateend, course.days, p.price FROM course
+        $res = $this->db->query("SELECT course.course_id, course.name, course.coursetype, (SELECT COUNT(*) FROM courses.student_ticket st WHERE st.ticket_id = course.course_id) AS cnts, p.datestart, p.dateend, p.price FROM course
         INNER JOIN pin p ON course.course_id = p.course_id
         ORDER BY p.course_id ". "LIMIT $ofset,$limit");
         return $res->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function findAll2($id=null){
+        if ($id) {
+            $res = $this->db->query("SELECT COUNT(*) FROM user 
+        INNER JOIN student s ON user.user_id = s.student_id
+        INNER JOIN student_ticket st ON s.student_id = st.student_id
+        inner join ticket t ON st.ticket_id = t.ticket_id
+        INNER JOIN pin p ON t.pin_id = p.pin_id
+        INNER JOIN course c ON p.course_id = c.course_id
+        WHERE p.course_id='$id'");
+        return $res->fetch(PDO::FETCH_NUM);
+        }
+        return false;
     }
 
     public function count(){

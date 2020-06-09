@@ -39,6 +39,7 @@ require_once 'template/header.php';
                             <th>Конец</th>
                             <th>Количество дней</th>
                             <th>Цена</th>
+                            <th>Цена(НДС)</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -64,13 +65,18 @@ require_once 'template/header.php';
                         while ($row2 = $result2->fetch_assoc()) {
                             $final2=$row2['organization_id'];
                         } 
+                        $earlier = new DateTime($course->datestart);
+                        $later = new DateTime($course->dateend);
+                        $nds=($course->price)+(($course->price)/100)*20;
+                        $diff = $later->diff($earlier)->format("%a");
                             echo '<td><a href="view-courses.php?id='.$course->course_id.'">'.$course->name.'</a></td>';
                             echo '<td><a href="view-organization.php?id='.$final2.'">'.$final.'</a></td>';
                             echo '<td>'.$course->coursetype.'</td>';
                             echo '<td>'.$course->datestart.'</td>';
                             echo '<td>'.$course->dateend.'</td>';
-                            echo '<td>'.$course->days.'</td>';
-                            echo '<td>'.$course->price.'</td>';
+                            echo '<td>'.$diff.'</td>';
+                            echo '<td>'.$course->price.' тг.</td>';
+                            echo '<td>'.$nds.' тг.</td>';
                             echo '</tr>';
                         }
                         ?>

@@ -6,9 +6,12 @@ if (isset($_GET['page'])) {
 } else {
     $page = 1;
 }
+if(isset($_GET['id'])){
+$id = Helper::clearInt($_GET['id']);
+}
 $courseMap = new CourseMap();
 $count = $courseMap->count();
-$courses = $courseMap->findAll($page*$size-$size, $size);
+$courses = $courseMap->findGroup($id);
 $header = 'Статус заполненности групп';
 require_once 'template/header.php';
 ?>
@@ -32,19 +35,14 @@ require_once 'template/header.php';
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>Название</th>
-                            <th>Тип курса</th>
-                            <th>Человек в группе</th>
+                            <th>Ф.И.О.</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php
                         foreach ($courses as $course) {
-
                             echo '<tr>';
-                            echo '<td><a href="view-courses.php?id='.$course->course_id.'">'.$course->name.'</a></td>';
-                            echo '<td>'.$course->coursetype.'</td>';
-                            echo '<td><a href="view-group.php?id='.$course->course_id.'">'.$courseMap->findAll2($course->course_id)[0].'/30</a></td>';
+                            echo '<td>'.$course->fio.'</td>';
                             echo '</tr>';
                         }
                         ?>
