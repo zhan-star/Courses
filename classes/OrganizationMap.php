@@ -10,19 +10,19 @@
  *
  * @author Жан
  */
-class CourseMap extends BaseMap
+class OrganizationMap extends BaseMap
 {
-    public function arrCourses()
+    public function arrOrganizations()
     {
         $res = $this->db->query("SELECT pin_id AS id, course_id AS value FROM otdel");
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function save(Course $course) {
-        if ($course->validate()) {
-            if ($course->course_id == 0) {
-                return $this->insert($course);
+    public function save(Pin $pin) {
+        if ($pin->validate()) {
+            if ($pin->pin_id == 0) {
+                return $this->insert($pin);
             } else {
-                return $this->update($course);
+                return $this->update($pin);
             }
         }
         return false;
@@ -30,7 +30,7 @@ class CourseMap extends BaseMap
     public function findById($id=null){
         if ($id) {
             $res = $this->db->query("SELECT pin_id, teacher_id, course_id, datestart, dateend,price " . "FROM pin WHERE pin_id = $id");
-            return $res->fetchObject("Pin");
+            return $res->fetch(PDO::FETCH_ASSOC);
         }
         return new Pin();
     }
@@ -53,24 +53,30 @@ class CourseMap extends BaseMap
     }*/
     public function findViewById($id=null){
         if ($id) {
-            $res = $this->db->query("SELECT course.course_id, course.name, course.coursetype, (SELECT COUNT(*) FROM courses.student_ticket st WHERE st.ticket_id = course.course_id) AS cnts, p.datestart, p.dateend, course.days, p.price FROM course
-            INNER JOIN pin p ON course.course_id = p.course_id
-             " . "WHERE course.course_id = $id
-             ORDER BY p.course_id
-             ");
+            $res = $this->db->query("SELECT * FROM organization  ". "WHERE organization.organization_id='$id'");
             return $res->fetch(PDO::FETCH_OBJ);
         }
         return false;
     }
+    public function setTeacherId(){ 
+            $res = $this->db->query("SELECT teacher.teacher_secondary from teacher
+            INNER JOIN user u ON teacher.teacher_id = u.user_id
+            WHERE CONCAT(u.lastname,' ',u.firstname,' ',u.patronymic)='Боднарь Дмитрий Максимович' ");
+            //return $res->fetchAll(PDO::FETCH_NUM); 
+            $query="SELECT teacher.teacher_secondary from teacher
+            INNER JOIN user u ON teacher.teacher_id = u.user_id
+            WHERE CONCAT(u.lastname,' ',u.firstname,' ',u.patronymic)='Боднарь Дмитрий Максимович' ";
+            $link = mysqli_connect("127.0.0.1", "root", "root", "courses");
+            $result = mysqli_query($link, $query);
+            return $result;  
+    }
     public function findAll($ofset=0, $limit=30){
-        $res = $this->db->query("SELECT course.course_id, course.name, course.coursetype, (SELECT COUNT(*) FROM courses.student_ticket st WHERE st.ticket_id = course.course_id) AS cnts, p.datestart, p.dateend, course.days, p.price FROM course
-        INNER JOIN pin p ON course.course_id = p.course_id
-        ORDER BY p.course_id ". "LIMIT $ofset,$limit");
+        $res = $this->db->query("SELECT * FROM organization  ". "LIMIT $ofset,$limit");
         return $res->fetchAll(PDO::FETCH_OBJ);
     }
 
     public function count(){
-        $res = $this->db->query("SELECT COUNT(*) AS cnt FROM course");
+        $res = $this->db->query("SELECT COUNT(*) AS cnt FROM pin");
         return $res->fetch(PDO::FETCH_OBJ)->cnt;
     }
 

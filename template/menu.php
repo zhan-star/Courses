@@ -26,6 +26,10 @@
             <li <?=($_SERVER['PHP_SELF']=='/list-filling.php')?'class="active"':'';?>>
                 <a href="list-filling.php"><i class="fa fa-users"></i><span>Наполнение групп</span></a>
             </li>
+            <li class="header">Списки</li>
+            <li <?=($_SERVER['PHP_SELF']=='/list-organizations.php')?'class="active"':'';?>>
+                <a href="list-organizations.php"><i class="fa fa-users"></i><span>Организации</span></a>
+            </li>
             </li>
         </ul>
     </section>

@@ -6,10 +6,10 @@ if (isset($_GET['page'])) {
 } else {
     $page = 1;
 }
-$courseMap = new CourseMap();
-$count = $courseMap->count();
-$courses = $courseMap->findAll($page*$size-$size, $size);
-$header = 'Статус заполненности групп';
+$organizationMap = new OrganizationMap();
+$count = $organizationMap->count();
+$organizations = $organizationMap->findAll($page*$size-$size, $size);
+$header = 'Организации';
 require_once 'template/header.php';
 ?>
 <div class="row">
@@ -27,23 +27,25 @@ require_once 'template/header.php';
             </div>-->
             <div class="box-body">
                 <?php
-                if ($courses) {
+                if ($organizations) {
                     ?>
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>Название</th>
-                            <th>Тип курса</th>
-                            <th>Человек в группе</th>
+                            <th>Наименование</th>
+                            <th>Адрес</th>
+                            <th>Телефон</th>
+                            <th>Эл.почта</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php
-                        foreach ($courses as $course) {
+                        foreach ($organizations as $organization) {
                             echo '<tr>';
-                            echo '<td><a href="view-courses.php?id='.$course->course_id.'">'.$course->name.'</a></td>';
-                            echo '<td>'.$course->coursetype.'</td>';
-                            echo '<td>'.$course->cnts.'/30</td>';
+                            echo '<td>'.$organization->name.'</td>';
+                            echo '<td>'.$organization->address.'</td>';
+                            echo '<td>'.$organization->phone.'</td>';
+                            echo '<td>'.$organization->email.'</td>';
                             echo '</tr>';
                         }
                         ?>

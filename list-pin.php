@@ -7,8 +7,11 @@ if (isset($_GET['page'])) {
     $page = 1;
 }
 $pinMap = new PinMap();
+$courseMap = new CourseMap();
 $count = $pinMap->count();
 $pins = $pinMap->findAll($page*$size-$size, $size);
+$courses=$courseMap->findAll($page*$size-$size, $size);
+
 $header = 'Расписание преподавателей';
 require_once 'template/header.php';
 ?>
@@ -41,13 +44,28 @@ require_once 'template/header.php';
                         </thead>
                         <tbody>
                         <?php
-                        foreach ($pins as $pin) {
+                        foreach ($pins as $pin) {  
+                        $query="SELECT teacher.teacher_secondary from teacher
+                        INNER JOIN user u ON teacher.teacher_id = u.user_id
+                        WHERE CONCAT(u.lastname,' ',u.firstname,' ',u.patronymic)='$pin->fio' ";
+                        $link = mysqli_connect("localhost", "root", "root", "courses");
+                        $result = mysqli_query($link, $query);
+                        while ($row = $result->fetch_assoc()) {
+                            $final=$row['teacher_secondary'];
+                        }
+                        $query2="SELECT course.course_id FROM course
+                        WHERE course.name = '$pin->name' ";
+                        $result2 = mysqli_query($link, $query2);
+                        while ($row2 = $result2->fetch_assoc()) {
+                            $final2=$row2['course_id'];
+                        }
                             echo '<tr>';
-                            echo '<td><a href="view-otdel.php?id='.$pin->pin_id.'">'.$pin->pin_id.'</a> '. '<a href="add-otdel.php?id='.$otdel->otdel_id.'"><i class="fa fa-pencil"></i></a></td>';
-                            echo '<td><a href="view-otdel.php?id='.$pin->pin_id.'">'.$pin->fio.'</a></td>';
-                            echo '<td><a href="view-otdel.php?id='.$pin->pin_id.'">'.$pin->name.'</a></td>';
+                            echo '<td>'.$pin->pin_id.'</td>';
+                            echo '<td><a href="view-teacher.php?id='.$final.'">'.$pin->fio.'</a></td>';
+                            echo '<td><a href="view-courses.php?id='.$final2.'">'.$pin->name.'</a></td>';
                             echo '<td>'.$pin->datestart.'</td>';
                             echo '<td>'.$pin->dateend.'</td>';
+                           
                             echo '</tr>';
                         }
                         ?>

@@ -33,6 +33,7 @@ require_once 'template/header.php';
                         <thead>
                         <tr>
                             <th>Название</th>
+                            <th>Организация</th>
                             <th>Тип курса</th>
                             <th>Начало</th>
                             <th>Конец</th>
@@ -44,8 +45,27 @@ require_once 'template/header.php';
                         <?php
                         foreach ($courses as $course) {
                             echo '<tr>';
-                            
-                            echo '<td><a href="view-otdel.php?id='.$pin->pin_id.'">'.$course->name.'</a></td>';
+                            $query="SELECT ORGANIZATION.name FROM organization 
+                            INNER JOIN ticket t ON organization.organization_id = t.organization_id
+                            INNER JOIN pin p ON t.pin_id = p.pin_id
+                            INNER JOIN course c ON p.course_id = c.course_id
+                            WHERE c.course_id='$course->course_id'";
+                        $link = mysqli_connect("localhost", "root", "root", "courses");
+                        $result = mysqli_query($link, $query);
+                        while ($row = $result->fetch_assoc()) {
+                            $final=$row['name'];
+                        } 
+                        $query2="SELECT organization.organization_id FROM organization 
+                        INNER JOIN ticket t ON organization.organization_id = t.organization_id
+                        INNER JOIN pin p ON t.pin_id = p.pin_id
+                        INNER JOIN course c ON p.course_id = c.course_id
+                        WHERE ORGANIZATION.name='$final'";
+                        $result2 = mysqli_query($link, $query2);
+                        while ($row2 = $result2->fetch_assoc()) {
+                            $final2=$row2['organization_id'];
+                        } 
+                            echo '<td><a href="view-courses.php?id='.$course->course_id.'">'.$course->name.'</a></td>';
+                            echo '<td><a href="view-organization.php?id='.$final2.'">'.$final.'</a></td>';
                             echo '<td>'.$course->coursetype.'</td>';
                             echo '<td>'.$course->datestart.'</td>';
                             echo '<td>'.$course->dateend.'</td>';

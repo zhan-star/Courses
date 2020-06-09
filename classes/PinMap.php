@@ -53,10 +53,24 @@ class PinMap extends BaseMap
     }*/
     public function findViewById($id=null){
         if ($id) {
-            $res = $this->db->query("SELECT pin.pin_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, course.name as course, pin.datestart, pin.dateend , pin.price " . " WHERE pin.pin_id = $id");
+            $res = $this->db->query("SELECT CONCAT(u.lastname,' ',u.firstname,' ',u.patronymic) AS fio, teacher.birthday, g.name, teacher.education, teacher.category FROM teacher
+            INNER JOIN user u ON teacher.teacher_id = u.user_id
+            INNER JOIN genders g ON teacher.gender = g.gender_id " . " WHERE teacher.teacher_secondary = $id");
             return $res->fetch(PDO::FETCH_OBJ);
         }
         return false;
+    }
+    public function setTeacherId(){ 
+            $res = $this->db->query("SELECT teacher.teacher_secondary from teacher
+            INNER JOIN user u ON teacher.teacher_id = u.user_id
+            WHERE CONCAT(u.lastname,' ',u.firstname,' ',u.patronymic)='Боднарь Дмитрий Максимович' ");
+            //return $res->fetchAll(PDO::FETCH_NUM); 
+            $query="SELECT teacher.teacher_secondary from teacher
+            INNER JOIN user u ON teacher.teacher_id = u.user_id
+            WHERE CONCAT(u.lastname,' ',u.firstname,' ',u.patronymic)='Боднарь Дмитрий Максимович' ";
+            $link = mysqli_connect("127.0.0.1", "root", "root", "courses");
+            $result = mysqli_query($link, $query);
+            return $result;  
     }
     public function findAll($ofset=0, $limit=30){
         $res = $this->db->query("SELECT pin.pin_id, CONCAT(u.lastname,' ', u.firstname,' ', u.patronymic) AS fio, c.`name`, pin.datestart, pin.dateend, pin.price FROM pin
