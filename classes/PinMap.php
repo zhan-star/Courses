@@ -62,7 +62,8 @@ class PinMap extends BaseMap
         $res = $this->db->query("SELECT pin.pin_id, CONCAT(u.lastname,' ', u.firstname,' ', u.patronymic) AS fio, c.`name`, pin.datestart, pin.dateend, pin.price FROM pin
         INNER JOIN teacher t ON pin.teacher_id = t.teacher_id
         INNER JOIN user u ON t.teacher_id = u.user_id
-        INNER JOIN course c ON pin.course_id = c.course_id ". "LIMIT $ofset,$limit");
+        INNER JOIN course c ON pin.course_id = c.course_id 
+        ORDER BY pin.pin_id ". "LIMIT $ofset,$limit");
         return $res->fetchAll(PDO::FETCH_OBJ);
     }
 

@@ -32,7 +32,6 @@ require_once 'template/header.php';
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>Номер курса</th>
                             <th>Название</th>
                             <th>Тип курса</th>
                             <th>Начало</th>
@@ -45,9 +44,9 @@ require_once 'template/header.php';
                         <?php
                         foreach ($courses as $course) {
                             echo '<tr>';
-                            echo '<td><a href="view-otdel.php?id='.$pin->pin_id.'">'.$course->course_id.'</a> '. '<a href="add-otdel.php?id='.$otdel->otdel_id.'"><i class="fa fa-pencil"></i></a></td>';
+                            
                             echo '<td><a href="view-otdel.php?id='.$pin->pin_id.'">'.$course->name.'</a></td>';
-                            echo '<td><a href="view-otdel.php?id='.$pin->pin_id.'">'.$course->coursetype.'</a></td>';
+                            echo '<td>'.$course->coursetype.'</td>';
                             echo '<td>'.$course->datestart.'</td>';
                             echo '<td>'.$course->dateend.'</td>';
                             echo '<td>'.$course->days.'</td>';

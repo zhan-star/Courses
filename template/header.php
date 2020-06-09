@@ -8,7 +8,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title><?=($header)? $header : 'Расписание занятий колледжа';?></title>
+  <title><?=($header)? $header : 'Курсы';?></title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="template/css/bootstrap.min.css">
@@ -61,7 +61,7 @@ desired effect
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>LT</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Расписание</b></span>
+      <span class="logo-lg"><b>Курсы</b></span>
     </a>
 
     <!-- Header Navbar -->

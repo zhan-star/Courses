@@ -9,7 +9,7 @@ if (isset($_GET['page'])) {
 $courseMap = new CourseMap();
 $count = $courseMap->count();
 $courses = $courseMap->findAll($page*$size-$size, $size);
-$header = 'Прайс-лист';
+$header = 'Статус заполненности групп';
 require_once 'template/header.php';
 ?>
 <div class="row">
@@ -42,10 +42,10 @@ require_once 'template/header.php';
                         <?php
                         foreach ($courses as $course) {
                             echo '<tr>';
-                            echo '<td><a href="view-otdel.php?id='.$pin->pin_id.'">'.$course->course_id.'</a> '. '<a href="add-otdel.php?id='.$otdel->otdel_id.'"><i class="fa fa-pencil"></i></a></td>';
+                            echo '<td><a href="view-otdel.php?id='.$pin->pin_id.'">'.$course->course_id.'</a> '. '</td>';
                             echo '<td><a href="view-otdel.php?id='.$pin->pin_id.'">'.$course->name.'</a></td>';
                             echo '<td><a href="view-otdel.php?id='.$pin->pin_id.'">'.$course->coursetype.'</a></td>';
-                            echo '<td>'.$course->counts.'/30</td>';
+                            echo '<td>'.$course->cnts.'/30</td>';
                             echo '</tr>';
                         }
                         ?>
