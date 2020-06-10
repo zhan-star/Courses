@@ -22,10 +22,9 @@ class Pin extends Table
     public $price = '';
     public function validate()
     {
-        if (!empty($this->name) && !empty($this->active)) {
+        if (!empty($this->teacher_id) && !empty($this->course_id) && !empty($this->datestart) && !empty($this->dateend) && !empty($this->price)) {
             return true;
         }
         return false;
-
     }
 }

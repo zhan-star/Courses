@@ -22,7 +22,6 @@ if (isset($_GET['id'])) {
                     <?php 
                         $earlier = new DateTime($course->datestart);
                         $later = new DateTime($course->dateend);
-
                         $diff = $later->diff($earlier)->format("%a");
                     ?>
                     <table class="table table-bordered table-hover">

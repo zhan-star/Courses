@@ -17,40 +17,44 @@ class OrganizationMap extends BaseMap
         $res = $this->db->query("SELECT pin_id AS id, course_id AS value FROM otdel");
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function save(Pin $pin) {
-        if ($pin->validate()) {
-            if ($pin->pin_id == 0) {
-                return $this->insert($pin);
+    public function save(Organization $organization) {
+        if ($organization->validate()) {
+            if ($organization->organization_id == 0) {
+                return $this->insert($organization);
             } else {
-                return $this->update($pin);
+                return $this->update($organization);
             }
         }
         return false;
     }
     public function findById($id=null){
         if ($id) {
-            $res = $this->db->query("SELECT pin_id, teacher_id, course_id, datestart, dateend,price " . "FROM pin WHERE pin_id = $id");
-            return $res->fetch(PDO::FETCH_ASSOC);
+            $res = $this->db->query("SELECT organization_id, name, address, phone,email FROM organization WHERE organization_id = $id");
+            return $res->fetchObject("Organization");
         }
-        return new Pin();
+        return new Organization();
     }
-    /*private function insert(Pin $pin){
-        $name = $this->db->quote($otdel->name);
-        $active = $this->db->quote($otdel->active);
-        if ($this->db->exec("INSERT INTO otdel(name,active)"
-                . " VALUES($name,$active)") == 1 ) {
-            $otdel->otdel_id = $this->db->lastInsertId();
+    private function insert(Organization $organization){
+        $name = $this->db->quote($organization->name);
+        $address = $this->db->quote($organization->address);
+        $phone = $this->db->quote($organization->phone);
+        $email = $this->db->quote($organization->email);
+        if ($this->db->exec("INSERT INTO organization(name,address,phone,email) VALUES($name,$address,$phone,$email)") == 1 ) {
+            $organization->organization_id = $this->db->lastInsertId();
             return true;
         }
         return false;
     }
-    private function update(Otdel $otdel){
-        $name = $this->db->quote($otdel->name);
-        if ( $this->db->exec("UPDATE otdel SET name = $name,". " active= $otdel->active WHERE otdel_id = ".$otdel->otdel_id) == 1) {
+    private function update(Organization $organization){
+        $name = $this->db->quote($organization->name);
+        $address = $this->db->quote($organization->address);
+        $phone = $this->db->quote($organization->phone);
+        $email = $this->db->quote($organization->email);
+        if ( $this->db->exec("UPDATE organization SET name = $name, address= $address, phone=$phone, email=$email WHERE organization_id = ".$organization->organization_id) == 1) {
             return true;
         }
         return false;
-    }*/
+    }
     public function findViewById($id=null){
         if ($id) {
             $res = $this->db->query("SELECT * FROM organization  ". "WHERE organization.organization_id='$id'");

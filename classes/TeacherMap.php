@@ -12,6 +12,12 @@
  * @author Жан
  */
 class TeacherMap extends BaseMap{
+    public function arrTeachers()
+    {
+        $res = $this->db->query("SELECT teacher_secondary as id, CONCAT(u.lastname,' ',u.firstname) AS value FROM teacher 
+        INNER JOIN user u ON teacher.teacher_id = u.user_id");
+        return $res->fetchAll(PDO::FETCH_ASSOC);
+    }
     public function findViewById($id=null){
         if ($id) {
             $res = $this->db->query("SELECT CONCAT(u.lastname,' ',u.firstname,' ',u.patronymic) AS fio, teacher.birthday, g.name, teacher.education, teacher.category FROM teacher

@@ -22,9 +22,12 @@ require_once 'template/header.php';
                     <li class="active"><?=$header;?></li>
                 </ol>
             </section>
-            <!--<div class="box-body">
-                <a class="btn btn-success" href="add-otdel.php">Добавить отделение</a>
-            </div>-->
+            <div class="box-body">
+                <a class="btn btn-success" href="add-course.php">Новый курс</a>
+            </div>
+            <div class="box-body">
+                <a class="btn btn-success" href="################">Новая заявка</a>
+            </div>
             <div class="box-body">
                 <?php
                 if ($courses) {
@@ -37,7 +40,7 @@ require_once 'template/header.php';
                             <th>Тип курса</th>
                             <th>Начало</th>
                             <th>Конец</th>
-                            <th>Количество дней</th>
+                            <th>Кол-во дней</th>
                             <th>Цена</th>
                             <th>Цена(НДС)</th>
                         </tr>

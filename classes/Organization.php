@@ -21,10 +21,9 @@ class Organization extends Table
     public $email = '';
     public function validate()
     {
-        if (!empty($this->name) && !empty($this->active)) {
+        if (!empty($this->name) && !empty($this->address) && !empty($this->phone) && !empty($this->email)) {
             return true;
         }
         return false;
-
     }
 }

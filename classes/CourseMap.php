@@ -14,7 +14,7 @@ class CourseMap extends BaseMap
 {
     public function arrCourses()
     {
-        $res = $this->db->query("SELECT pin_id AS id, course_id AS value FROM otdel");
+        $res = $this->db->query("SELECT course_id AS id, name AS value FROM course");
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
     public function save(Course $course) {
@@ -29,28 +29,28 @@ class CourseMap extends BaseMap
     }
     public function findById($id=null){
         if ($id) {
-            $res = $this->db->query("SELECT pin_id, teacher_id, course_id, datestart, dateend,price " . "FROM pin WHERE pin_id = $id");
-            return $res->fetchObject("Pin");
+            $res = $this->db->query("SELECT course_id, name, coursetype FROM course WHERE course_id = $id");
+            return $res->fetchObject("Course");
         }
-        return new Pin();
+        return new Course();
     }
-    /*private function insert(Pin $pin){
-        $name = $this->db->quote($otdel->name);
-        $active = $this->db->quote($otdel->active);
-        if ($this->db->exec("INSERT INTO otdel(name,active)"
-                . " VALUES($name,$active)") == 1 ) {
-            $otdel->otdel_id = $this->db->lastInsertId();
+    private function insert(Course $course){
+        $name = $this->db->quote($course->name);
+        $coursetype = $this->db->quote($course->coursetype);
+        if ($this->db->exec("INSERT INTO course(name,coursetype) VALUES($name,$coursetype)") == 1 ) {
+            $course->course_id = $this->db->lastInsertId();
             return true;
         }
         return false;
     }
-    private function update(Otdel $otdel){
-        $name = $this->db->quote($otdel->name);
-        if ( $this->db->exec("UPDATE otdel SET name = $name,". " active= $otdel->active WHERE otdel_id = ".$otdel->otdel_id) == 1) {
+    private function update(Course $course){
+        $name = $this->db->quote($course->name);
+        $coursetype = $this->db->quote($course->coursetype);
+        if ( $this->db->exec("UPDATE course SET name = $name, coursetype= $coursetype WHERE course_id = ".$course->course_id) == 1) {
             return true;
         }
         return false;
-    }*/
+    }
     public function findViewById($id=null){
         if ($id) {
             $res = $this->db->query("SELECT course.course_id, course.name, course.coursetype, (SELECT COUNT(*) FROM courses.student_ticket st WHERE st.ticket_id = course.course_id) AS cnts, p.datestart, p.dateend, p.price FROM course

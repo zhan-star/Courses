@@ -22,9 +22,9 @@ require_once 'template/header.php';
                     <li class="active"><?=$header;?></li>
                 </ol>
             </section>
-            <!--<div class="box-body">
-                <a class="btn btn-success" href="add-otdel.php">Добавить отделение</a>
-            </div>-->
+            <div class="box-body">
+                    <a class="btn btn-success" href="add-organization.php">Зарегистрировать организацию</a>
+            </div>
             <div class="box-body">
                 <?php
                 if ($organizations) {
@@ -42,7 +42,7 @@ require_once 'template/header.php';
                         <?php
                         foreach ($organizations as $organization) {
                             echo '<tr>';
-                            echo '<td>'.$organization->name.'</td>';
+                            echo '<td><a href="view-organization.php?id='.$organization->organization_id.'">'.$organization->name.'</a>&nbsp;&nbsp;<a href="add-organization.php?id='.$organization->organization_id.'"><i class="fa fa-pencil"></i></a></td>';
                             echo '<td>'.$organization->address.'</td>';
                             echo '<td>'.$organization->phone.'</td>';
                             echo '<td>'.$organization->email.'</td>';

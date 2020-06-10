@@ -29,28 +29,34 @@ class PinMap extends BaseMap
     }
     public function findById($id=null){
         if ($id) {
-            $res = $this->db->query("SELECT pin_id, teacher_id, course_id, datestart, dateend,price " . "FROM pin WHERE pin_id = $id");
+            $res = $this->db->query("SELECT pin_id, teacher_id, course_id, datestart, dateend, price FROM pin WHERE pin_id = $id");
             return $res->fetchObject("Pin");
         }
         return new Pin();
     }
-    /*private function insert(Pin $pin){
-        $name = $this->db->quote($otdel->name);
-        $active = $this->db->quote($otdel->active);
-        if ($this->db->exec("INSERT INTO otdel(name,active)"
-                . " VALUES($name,$active)") == 1 ) {
-            $otdel->otdel_id = $this->db->lastInsertId();
+    private function insert(Pin $pin){
+        $teacher_id = $this->db->quote($pin->teacher_id);
+        $course_id = $this->db->quote($pin->course_id);
+        $datestart = $this->db->quote($pin->datestart);
+        $dateend = $this->db->quote($pin->dateend);
+        $price = $this->db->quote($pin->price);
+        if ($this->db->exec("INSERT INTO pin(teacher_id,course_id,datestart,dateend,price) VALUES($teacher_id,$course_id,$datestart,$dateend,$price)") == 1 ) {
+            $pin->pin_id = $this->db->lastInsertId();
             return true;
         }
         return false;
     }
-    private function update(Otdel $otdel){
-        $name = $this->db->quote($otdel->name);
-        if ( $this->db->exec("UPDATE otdel SET name = $name,". " active= $otdel->active WHERE otdel_id = ".$otdel->otdel_id) == 1) {
+    private function update(Pin $pin){
+        $teacher_id = $this->db->quote($pin->teacher_id);
+        $course_id = $this->db->quote($pin->course_id);
+        $datestart = $this->db->quote($pin->datestart);
+        $dateend = $this->db->quote($pin->dateend);
+        $price = $this->db->quote($pin->price);
+        if ($this->db->exec("UPDATE pin SET teacher_id=$teacher_id, course_id=$course_id, datestart=$datestart, dateend=$dateend, price=$price WHERE pin_id = ".$pin->pin_id) == 1 ) {
             return true;
         }
         return false;
-    }*/
+    }
     public function findViewById($id=null){
         if ($id) {
             $res = $this->db->query("SELECT CONCAT(u.lastname,' ',u.firstname,' ',u.patronymic) AS fio, teacher.birthday, g.name, teacher.education, teacher.category FROM teacher

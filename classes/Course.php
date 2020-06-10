@@ -17,14 +17,11 @@ class Course extends Table
     public $course_id = 0;
     public $name = '';
     public $coursetype = '';
-    public $days = '';
-    public $counts = '';
     public function validate()
     {
-        if (!empty($this->name) && !empty($this->active)) {
+        if (!empty($this->name) && !empty($this->coursetype)) {
             return true;
         }
         return false;
-
     }
 }
