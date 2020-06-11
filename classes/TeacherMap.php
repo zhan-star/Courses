@@ -14,7 +14,7 @@
 class TeacherMap extends BaseMap{
     public function arrTeachers()
     {
-        $res = $this->db->query("SELECT teacher_secondary as id, CONCAT(u.lastname,' ',u.firstname) AS value FROM teacher 
+        $res = $this->db->query("SELECT teacher_id as id, CONCAT(u.lastname,' ',u.firstname) AS value FROM teacher 
         INNER JOIN user u ON teacher.teacher_id = u.user_id");
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -48,6 +48,7 @@ class TeacherMap extends BaseMap{
         return false;
     }
     private function update(Teacher $teacher){
+        
         if ($this->db->exec("UPDATE teacher SET otdel_id = $teacher->otdel_id WHERE user_id=".$teacher->user_id) ==1) {
             return true;
         }

@@ -36,11 +36,11 @@
         </div>
         <div class="form-group">
             <label>Дата окончания</label>
-            <input type="date" class="form-control" name="datestart" required="required" value="<?=$pin->dateend;?>">
+            <input type="date" class="form-control" name="dateend" required="required" value="<?=$pin->dateend;?>">
         </div>
         <div class="form-group">
             <label>Цена</label>
-            <input type="number" class="form-control" name="datestart" required="required" value="<?=$pin->price;?>">
+            <input type="number" class="form-control" name="price" required="required" value="<?=$pin->price;?>">
         </div>
         <div class="form-group">
             <button type="submit" name="savePin" class="btn btn-primary">Сохранить</button>

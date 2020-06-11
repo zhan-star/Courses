@@ -2,6 +2,12 @@
 
 class StudentMap extends BaseMap {
 
+    public function arrStudents()
+    {
+        $res = $this->db->query("SELECT student_id AS id, CONCAT(u.lastname,' ',u.firstname) AS value FROM student
+        INNER JOIN user u ON student.student_id = u.user_id");
+        return $res->fetchAll(PDO::FETCH_ASSOC);
+    }
     public function findById($id = null)
     {
 

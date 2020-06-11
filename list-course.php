@@ -22,12 +22,7 @@ require_once 'template/header.php';
                     <li class="active"><?=$header;?></li>
                 </ol>
             </section>
-            <div class="box-body">
-                <a class="btn btn-success" href="add-course.php">Новый курс</a>
-            </div>
-            <div class="box-body">
-                <a class="btn btn-success" href="################">Новая заявка</a>
-            </div>
+           
             <div class="box-body">
                 <?php
                 if ($courses) {
@@ -91,6 +86,9 @@ require_once 'template/header.php';
                     echo 'Курсы не найдены';
                 } 
                 ?>
+            </div>
+            <div class="box-body">
+                <a class="btn btn-warning " href="add-course.php">Новый курс</a>&nbsp;&nbsp;&nbsp;<a class="btn btn-success" href="add-ticket.php">Новая заявка</a>
             </div>
             <div class="box-body">
                 <?php Helper::paginator($count, $page,$size); ?>

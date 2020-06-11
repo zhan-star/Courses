@@ -51,7 +51,7 @@ require_once 'template/header.php';
                     <?php
                 } 
                 else {
-                    echo 'Курсы не найдены';
+                    echo 'В этой группе еще нет студентов';
                 } 
                 ?>
             </div>

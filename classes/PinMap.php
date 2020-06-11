@@ -14,7 +14,8 @@ class PinMap extends BaseMap
 {
     public function arrPins()
     {
-        $res = $this->db->query("SELECT pin_id AS id, course_id AS value FROM otdel");
+        $res = $this->db->query("SELECT pin_id AS id, c.name AS value FROM pin 
+        INNER JOIN course c ON pin.course_id = c.course_id");
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
     public function save(Pin $pin) {

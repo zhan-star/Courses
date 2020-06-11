@@ -14,7 +14,7 @@ class OrganizationMap extends BaseMap
 {
     public function arrOrganizations()
     {
-        $res = $this->db->query("SELECT pin_id AS id, course_id AS value FROM otdel");
+        $res = $this->db->query("SELECT organization_id AS id, name AS value FROM organization");
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
     public function save(Organization $organization) {

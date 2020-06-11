@@ -26,6 +26,9 @@ require_once 'template/header.php';
                     <a class="btn btn-success" href="add-organization.php">Зарегистрировать организацию</a>
             </div>
             <div class="box-body">
+                    <a class="btn btn-success" href="add-ticket.php">Назначить организацию на курс (закрепление)</a>
+            </div>
+            <div class="box-body">
                 <?php
                 if ($organizations) {
                     ?>
