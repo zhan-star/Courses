@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Июн 09 2020 г., 12:34
+-- Время создания: Июн 11 2020 г., 16:40
 -- Версия сервера: 10.3.22-MariaDB
 -- Версия PHP: 7.1.33
 
@@ -30,19 +30,19 @@ SET time_zone = "+00:00";
 CREATE TABLE `course` (
   `course_id` int(11) NOT NULL,
   `name` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `coursetype` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `days` int(11) DEFAULT NULL,
-  `counts` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `coursetype` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `course`
 --
 
-INSERT INTO `course` (`course_id`, `name`, `coursetype`, `days`, `counts`) VALUES
-(1, 'Курс \"быстрый курс\"', 'Информационные системы', 7, '25'),
-(2, 'Курс \"глубокий\"', 'Информационные технологии', 31, '15'),
-(3, 'Курс \"стандартный\"', 'Вычислительная техника', 14, '30');
+INSERT INTO `course` (`course_id`, `name`, `coursetype`) VALUES
+(1, 'Курс \"быстрый курс\"', 'Информационные системы'),
+(2, 'Курс \"углубленный\"', 'Информационные технологии'),
+(3, 'Курс \"стандартный\"', 'Вычислительная техника'),
+(4, 'Курс \"Роботрон\"', 'Робототехника'),
+(5, 'Курс \"webDee\"', 'Веб-дизайн');
 
 -- --------------------------------------------------------
 
@@ -103,7 +103,7 @@ CREATE TABLE `organization` (
 
 INSERT INTO `organization` (`organization_id`, `name`, `address`, `phone`, `email`) VALUES
 (1, 'SmartCourse', 'Бейбитшилик 39', '+770324892834', 'randomemail@email.com'),
-(2, 'BrainExp', 'Чингиза Айтматова 35', '+7723402384982', 'emailemail@email.com'),
+(2, 'BrainExp', 'Чингиза Айтматова 38', '+7723402384982', 'emailemail@email.com'),
 (3, 'AyBeeSee', 'Ботаническая 14', '+77394289230498', 'notanemail@email.com');
 
 -- --------------------------------------------------------
@@ -127,7 +127,10 @@ CREATE TABLE `pin` (
 
 INSERT INTO `pin` (`pin_id`, `teacher_id`, `course_id`, `datestart`, `dateend`, `price`) VALUES
 (1, 6, 1, '2020-06-09', '2020-06-16', 30000),
-(2, 6, 3, '2020-07-01', '2020-07-15', 20000);
+(2, 6, 3, '2020-07-01', '2020-07-15', 20000),
+(3, 5, 2, '2020-08-09', '2020-09-03', 45000),
+(4, 5, 4, '2020-09-15', '2020-10-13', 34000),
+(5, 6, 5, '2020-10-18', '2020-11-08', 17800);
 
 -- --------------------------------------------------------
 
@@ -137,6 +140,7 @@ INSERT INTO `pin` (`pin_id`, `teacher_id`, `course_id`, `datestart`, `dateend`, 
 
 CREATE TABLE `student` (
   `student_id` int(11) NOT NULL,
+  `student_secondary` int(11) NOT NULL,
   `dolzhnost_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -144,11 +148,12 @@ CREATE TABLE `student` (
 -- Дамп данных таблицы `student`
 --
 
-INSERT INTO `student` (`student_id`, `dolzhnost_id`) VALUES
-(1, 1),
-(2, 1),
-(4, 2),
-(3, 3);
+INSERT INTO `student` (`student_id`, `student_secondary`, `dolzhnost_id`) VALUES
+(1, 1, 1),
+(2, 2, 1),
+(3, 3, 3),
+(4, 4, 2),
+(7, 5, 1);
 
 -- --------------------------------------------------------
 
@@ -168,7 +173,11 @@ CREATE TABLE `student_ticket` (
 
 INSERT INTO `student_ticket` (`student_ticket_id`, `student_id`, `ticket_id`) VALUES
 (1, 1, 2),
-(2, 3, 1);
+(2, 3, 1),
+(3, 4, 3),
+(4, 2, 2),
+(5, 7, 4),
+(7, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -178,6 +187,7 @@ INSERT INTO `student_ticket` (`student_ticket_id`, `student_id`, `ticket_id`) VA
 
 CREATE TABLE `teacher` (
   `teacher_id` int(11) NOT NULL,
+  `teacher_secondary` int(11) NOT NULL,
   `birthday` date DEFAULT NULL,
   `gender` tinyint(4) DEFAULT NULL,
   `education` varchar(40) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -188,9 +198,9 @@ CREATE TABLE `teacher` (
 -- Дамп данных таблицы `teacher`
 --
 
-INSERT INTO `teacher` (`teacher_id`, `birthday`, `gender`, `education`, `category`) VALUES
-(5, '1975-05-25', 2, 'Магистратура МГУ - психология', 'первая'),
-(6, '1998-04-15', 1, 'Аграрный университет - программирование', 'высшая');
+INSERT INTO `teacher` (`teacher_id`, `teacher_secondary`, `birthday`, `gender`, `education`, `category`) VALUES
+(5, 1, '1975-05-25', 2, 'Магистратура МГУ - психология', 'первая'),
+(6, 2, '1998-04-15', 1, 'Аграрный университет - программирование', 'высшая');
 
 -- --------------------------------------------------------
 
@@ -210,7 +220,9 @@ CREATE TABLE `ticket` (
 
 INSERT INTO `ticket` (`ticket_id`, `pin_id`, `organization_id`) VALUES
 (1, 1, 1),
-(2, 2, 2);
+(2, 2, 2),
+(3, 3, 3),
+(4, 4, 2);
 
 -- --------------------------------------------------------
 
@@ -235,7 +247,8 @@ INSERT INTO `user` (`user_id`, `firstname`, `lastname`, `patronymic`) VALUES
 (3, 'Александр', 'Павлов', 'Харитонович'),
 (4, 'Джордж', 'Уоррен', 'Варденович'),
 (5, 'Кристина', 'Федорова', 'Валерьевна'),
-(6, 'Дмитрий', 'Боднарь', 'Максимович');
+(6, 'Дмитрий', 'Боднарь', 'Максимович'),
+(7, 'Есенжолов', 'Жангир', 'Арманович');
 
 --
 -- Индексы сохранённых таблиц
@@ -277,23 +290,25 @@ ALTER TABLE `pin`
 -- Индексы таблицы `student`
 --
 ALTER TABLE `student`
-  ADD PRIMARY KEY (`student_id`),
-  ADD KEY `FK_student_dolzhnost_dolzhnost_id` (`dolzhnost_id`);
+  ADD PRIMARY KEY (`student_secondary`),
+  ADD KEY `FK_student_dolzhnost_dolzhnost_id` (`dolzhnost_id`),
+  ADD KEY `FK_student_user_user_id` (`student_id`);
 
 --
 -- Индексы таблицы `student_ticket`
 --
 ALTER TABLE `student_ticket`
   ADD PRIMARY KEY (`student_ticket_id`),
-  ADD KEY `FK_student_ticket_student_student_id` (`student_id`),
-  ADD KEY `FK_student_ticket_ticket_ticket_id` (`ticket_id`);
+  ADD KEY `FK_student_ticket_ticket_ticket_id` (`ticket_id`),
+  ADD KEY `FK_student_ticket_student_student_id` (`student_id`);
 
 --
 -- Индексы таблицы `teacher`
 --
 ALTER TABLE `teacher`
-  ADD PRIMARY KEY (`teacher_id`),
-  ADD KEY `FK_teacher_genders_gender_id` (`gender`);
+  ADD PRIMARY KEY (`teacher_secondary`),
+  ADD KEY `FK_teacher_genders_gender_id` (`gender`),
+  ADD KEY `FK_teacher_pin_teacher_id` (`teacher_id`);
 
 --
 -- Индексы таблицы `ticket`
@@ -317,7 +332,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT для таблицы `course`
 --
 ALTER TABLE `course`
-  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT для таблицы `dolzhnost`
@@ -329,43 +344,43 @@ ALTER TABLE `dolzhnost`
 -- AUTO_INCREMENT для таблицы `organization`
 --
 ALTER TABLE `organization`
-  MODIFY `organization_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `organization_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `pin`
 --
 ALTER TABLE `pin`
-  MODIFY `pin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `pin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT для таблицы `student`
 --
 ALTER TABLE `student`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `student_secondary` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT для таблицы `student_ticket`
 --
 ALTER TABLE `student_ticket`
-  MODIFY `student_ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `student_ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT для таблицы `teacher`
 --
 ALTER TABLE `teacher`
-  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `teacher_secondary` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -375,8 +390,7 @@ ALTER TABLE `user`
 -- Ограничения внешнего ключа таблицы `pin`
 --
 ALTER TABLE `pin`
-  ADD CONSTRAINT `FK_pin_course_course_id` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `FK_pin_teacher_teacher_id` FOREIGN KEY (`teacher_id`) REFERENCES `teacher` (`teacher_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `FK_pin_course_course_id` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Ограничения внешнего ключа таблицы `student`
@@ -397,6 +411,7 @@ ALTER TABLE `student_ticket`
 --
 ALTER TABLE `teacher`
   ADD CONSTRAINT `FK_teacher_genders_gender_id` FOREIGN KEY (`gender`) REFERENCES `genders` (`gender_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `FK_teacher_pin_teacher_id` FOREIGN KEY (`teacher_id`) REFERENCES `pin` (`teacher_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `FK_teacher_user_user_id` FOREIGN KEY (`teacher_id`) REFERENCES `user` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
