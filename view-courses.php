@@ -39,7 +39,7 @@ if (isset($_GET['id'])) {
                         </tr>
                         <tr>
                             <th>В данный момент на курсе</th>
-                            <td><?=$courseMap->findAll2($course->course_id)[0];?> человек(-а)</td>
+                            <td><?php echo '<a href="view-group.php?id='.$course->course_id.'">'.$courseMap->findAll2($course->course_id)[0].' человек(-а)</a></td>';?>
                         </tr>
                     </table>
                 </div>

@@ -1,6 +1,6 @@
 <?php
 require_once 'secure.php';
-$size = 5;
+$size = 6;
 if (isset($_GET['page'])) {
     $page = Helper::clearInt($_GET['page']);
 } else {

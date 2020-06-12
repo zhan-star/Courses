@@ -24,7 +24,9 @@
         </div>
         <div class="form-group">
             <label>Тип курса</label>
-            <input type="text" class="form-control" name="coursetype" required="required" value="<?=$course->coursetype;?>">
+            <select class="form-control" name="coursetype_id">
+                <?= Helper::printSelectOptions(0, (new CourseMap())->arrCoursetypes());?>
+            </select>
         </div>
         <div class="form-group">
             <button type="submit" name="saveCourse" class="btn btn-primary">Сохранить</button>

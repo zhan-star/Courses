@@ -75,7 +75,7 @@ require_once 'template/header.php';
                 ?>
             </div>
             <div class="box-body">
-                <a class="btn btn-success" href="search-pin.php">Искать по дате</a>
+                <a class="btn btn-success" href="search-pin.php">&#x1F50D; Искать по дате</a>
             </div>
             <div class="box-body">
                 <?php Helper::paginator($count, $page,$size); ?>
