@@ -62,18 +62,7 @@ class OrganizationMap extends BaseMap
         }
         return false;
     }
-    public function setTeacherId(){ 
-            $res = $this->db->query("SELECT teacher.teacher_secondary from teacher
-            INNER JOIN user u ON teacher.teacher_id = u.user_id
-            WHERE CONCAT(u.lastname,' ',u.firstname,' ',u.patronymic)='Боднарь Дмитрий Максимович' ");
-            //return $res->fetchAll(PDO::FETCH_NUM); 
-            $query="SELECT teacher.teacher_secondary from teacher
-            INNER JOIN user u ON teacher.teacher_id = u.user_id
-            WHERE CONCAT(u.lastname,' ',u.firstname,' ',u.patronymic)='Боднарь Дмитрий Максимович' ";
-            $link = mysqli_connect("127.0.0.1", "root", "root", "courses");
-            $result = mysqli_query($link, $query);
-            return $result;  
-    }
+
     public function findAll($ofset=0, $limit=30){
         $res = $this->db->query("SELECT * FROM organization  ". "LIMIT $ofset,$limit");
         return $res->fetchAll(PDO::FETCH_OBJ);

@@ -100,10 +100,7 @@ class TicketMap extends BaseMap
         return false;
     }
 
-    public function count(){
-        $res = $this->db->query("SELECT COUNT(*) AS cnt FROM course");
-        return $res->fetch(PDO::FETCH_OBJ)->cnt;
-    }
+ 
 
     
 }
