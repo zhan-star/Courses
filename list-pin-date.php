@@ -6,13 +6,13 @@ if (isset($_GET['page'])) {
 } else {
     $page = 1;
 }
+if (isset($_POST['value'])){
 $pinMap = new PinMap();
 $courseMap = new CourseMap();
+$value=Helper::clearString($_POST['value']);
 $count = $pinMap->count();
-$pins = $pinMap->findAll($page*$size-$size, $size);
-$courses=$courseMap->findAll($page*$size-$size, $size);
-
-$header = 'Расписание преподавателей';
+$pins = $pinMap->findAllDate($value);
+$header = 'Поиск закрепления по дате';
 require_once 'template/header.php';
 ?>
 <div class="row">
@@ -33,6 +33,7 @@ require_once 'template/header.php';
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
                         <tr>
+                            <th>№</th>
                             <th>Преподаватель</th>
                             <th>Название курса</th>
                             <th>Начало</th>
@@ -57,6 +58,7 @@ require_once 'template/header.php';
                             $final2=$row2['course_id'];
                         }
                             echo '<tr>';
+                            echo '<td>'.$pin->pin_id.'</td>';
                             echo '<td><a href="view-teacher.php?id='.$final.'">'.$pin->fio.'</a></td>';
                             echo '<td><a href="view-courses.php?id='.$final2.'">'.$pin->name.'</a></td>';
                             echo '<td>'.$pin->datestart.'</td>';
@@ -70,12 +72,12 @@ require_once 'template/header.php';
                     <?php
                 } 
                 else {
-                    echo 'Расписание не найдено';
+                    echo 'На заданную дату курсов нет.';
                 } 
-                ?>
+            }?>
             </div>
             <div class="box-body">
-                <a class="btn btn-success" href="search-pin.php">Искать по дате</a>
+                <a class="btn btn-warning" href="list-pin.php">Назад</a>
             </div>
             <div class="box-body">
                 <?php Helper::paginator($count, $page,$size); ?>

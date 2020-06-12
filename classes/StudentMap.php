@@ -10,9 +10,8 @@ class StudentMap extends BaseMap {
     }
     public function findById($id = null)
     {
-
         if ($id) {
-            $res = $this->db->query("SELECT user_id, gruppa_id FROM student WHERE user_id = $id");
+            $res = $this->db->query("SELECT student_id, dolzhnost_id FROM student WHERE student_id = $id");
             $student = $res->fetchObject("Student");
             if ($student) {
                 return $student;
@@ -25,8 +24,8 @@ class StudentMap extends BaseMap {
     {
 
         if ($user->validate() && $student->validate() && (new UserMap())->save($user)) {
-            if ($student->user_id == 0) {
-                $student->user_id = $user->user_id;
+            if ($student->student_id == 0) {
+                $student->student_id = $user->user_id;
                 return $this->insert($student);
             } else {
                 return $this->update($student);
@@ -38,7 +37,7 @@ class StudentMap extends BaseMap {
 
     private function insert(Student $student)
     {
-        if ($this->db->exec("INSERT INTO student (user_id, gruppa_id, num_zach) VALUES ($student->user_id, $student->gruppa_id, $student->num_zach)")  == 1) {
+        if ($this->db->exec("INSERT INTO student (student_id, dolzhnost_id) VALUES ($student->student_id, $student->dolzhnost_id)")  == 1) {
             return true;
         }
         return false;
@@ -46,8 +45,7 @@ class StudentMap extends BaseMap {
 
     private function update(Student $student)
     {
-
-        if ($this->db->exec("UPDATE $student SET gruppa_id = $student->gruppa_id WHERE user_id=" . $student->user_id) == 1) {
+        if ($this->db->exec("UPDATE $student SET dolzhnost_id = $student->dolzhnost_id WHERE student_id=" . $student->student_id) == 1) {
             return true;
         }
         return false;
@@ -56,17 +54,15 @@ class StudentMap extends BaseMap {
     public function findAll($ofset = 0, $limit = 30)
     {
 
-        $res = $this->db->query("SELECT user.user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, user.birthday, "
-            . " gender.name AS gender, gruppa.name AS gruppa, role.name AS role FROM user INNER JOIN student ON user.user_id=student.user_id "
-            . "INNER JOIN gender ON user.gender_id=gender.gender_id INNER JOIN gruppa ON student.gruppa_id=gruppa.gruppa_id"
-            . " INNER JOIN role ON user.role_id=role.role_id LIMIT $ofset, $limit");
+        $res = $this->db->query("SELECT student_secondary AS id, student_id as ids, u.lastname AS lastname, u.firstname AS firstname, u.patronymic AS patronymic, d.name as dolzhnost FROM student 
+        INNER JOIN user u ON student.student_id = u.user_id
+        INNER JOIN dolzhnost d ON student.dolzhnost_id = d.dolzhnost_id LIMIT $ofset, $limit");
         return $res->fetchAll(PDO::FETCH_OBJ);
 
     }
 
     public function count()
     {
-
         $res = $this->db->query("SELECT COUNT(*) AS cnt FROM student");
         return $res->fetch(PDO::FETCH_OBJ)->cnt;
     }

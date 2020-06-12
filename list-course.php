@@ -88,7 +88,7 @@ require_once 'template/header.php';
                 ?>
             </div>
             <div class="box-body">
-                <a class="btn btn-warning " href="add-course.php">Новый курс</a>&nbsp;&nbsp;&nbsp;<a class="btn btn-success" href="add-ticket.php">Новая заявка</a>
+                <a class="btn btn-warning " href="add-course.php">Новый курс</a>&nbsp;&nbsp;&nbsp;<a class="btn btn-success" href="add-pin.php">Новая заявка</a>
             </div>
             <div class="box-body">
                 <?php Helper::paginator($count, $page,$size); ?>

@@ -16,20 +16,11 @@ class User extends Table{
         public $user_id = 0;
         public $lastname = '';
         public $firstname='';
-        public $patronymic=0;
-        public $login=0;
-        public $pass=0;
-        public $gender_id ='';
-        public $birthday=0;
-        public $role_id='';
-        public $active=1;
+        public $patronymic='';
         public function validate(){
         if (!empty($this->lastname) &&
         !empty($this->firstname) &&
-        !empty($this->login) &&
-        !empty($this->pass) &&
-        !empty($this->role_id) &&
-        !empty($this->gender_id)) {
+        !empty($this->patronymic)) {
         return true;
         }
         return false;

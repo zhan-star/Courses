@@ -13,12 +13,16 @@
  */
  class Teacher extends Table{
     //put your code here
-    public $user_id=0;
-    public $otdel_id='';
+    public $teacher_id=0;
+    public $teacher_secondary='';
+    public $birthday='';
+    public $gender='';
+    public $education='';
+    public $category='';
     public function validate(){
-        if (!empty($this->otdel_id)) {
+        if (!empty($this->birthday)&&!empty($this->gender)&&!empty($this->education)&&!empty($this->category)) {
             return true;
             }
-            return false;
+        return false;
     }
 }

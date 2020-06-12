@@ -88,6 +88,16 @@ class PinMap extends BaseMap
         ORDER BY pin.pin_id ". "LIMIT $ofset,$limit");
         return $res->fetchAll(PDO::FETCH_OBJ);
     }
+    public function findAllDate($value){
+        $valueFn = $this->db->quote($value);
+        $res = $this->db->query("SELECT pin.pin_id, CONCAT(u.lastname,' ', u.firstname,' ', u.patronymic) AS fio, c.`name`, pin.datestart, pin.dateend, pin.price FROM pin
+        INNER JOIN teacher t ON pin.teacher_id = t.teacher_id
+        INNER JOIN user u ON t.teacher_id = u.user_id
+        INNER JOIN course c ON pin.course_id = c.course_id 
+        WHERE $valueFn BETWEEN pin.datestart AND pin.dateend
+        ORDER BY pin.pin_id");
+        return $res->fetchAll(PDO::FETCH_OBJ);
+    }
 
     public function count(){
         $res = $this->db->query("SELECT COUNT(*) AS cnt FROM pin");

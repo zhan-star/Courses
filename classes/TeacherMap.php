@@ -28,7 +28,17 @@ class TeacherMap extends BaseMap{
         return false;        
 
     }
-    
+    public function findById($id = null)
+    {
+        if ($id) {
+            $res = $this->db->query("SELECT teacher_id, birthday, gender, education, category FROM teacher WHERE teacher_id = $id");
+            $teacher = $res->fetchObject("Teacher");
+            if ($teacher) {
+                return $teacher;
+            }
+        }
+        return new Teacher();
+    }
     public function save(User $user, Teacher $teacher){
         if ($user->validate() && $teacher->validate() && (new UserMap())->save($user)) {
             if ($teacher->user_id == 0) {
@@ -42,27 +52,31 @@ class TeacherMap extends BaseMap{
         return false;
     }
     private function insert(Teacher $teacher){
-        if ($this->db->exec("INSERT INTO teacher(user_id,otdel_id) VALUES($teacher->user_id, $teacher->otdel_id)")== 1) {
+        $teacher_id = $teacher->teacher_id;
+        $birthday = $this->db->quote($teacher->birthday);
+        $gender = $teacher->gender;
+        $education = $this->db->quote($teacher->education);
+        $category = $this->db->quote($teacher->category);
+        if ($this->db->exec("INSERT INTO teacher (teacher_id, birthday, gender, education, category) VALUES($teacher->user_id, $birthday, $gender, $education, $category)")== 1) {
             return true;
         }
         return false;
     }
     private function update(Teacher $teacher){
-        
-        if ($this->db->exec("UPDATE teacher SET otdel_id = $teacher->otdel_id WHERE user_id=".$teacher->user_id) ==1) {
+        $teacher_id = $teacher->teacher_id;
+        $birthday = $this->db->quote($teacher->birthday);
+        $gender = $teacher->gender;
+        $education = $this->db->quote($teacher->education);
+        $category = $this->db->quote($teacher->category);
+        if ($this->db->exec("UPDATE teacher SET birthday = $birthday, gender=$gender, education=$education, category=$category WHERE teacher_id=".$teacher->teacher_id) ==1) {
             return true;
         }
         return false;
     }
     public function findAll($ofset=0, $limit=30){
-        $res = $this->db->query("SELECT user.user_id,
-        CONCAT(user.lastname,' ', user.firstname, ' ',
-        user.patronymic) AS fio, user.birthday, ". " gender.name AS gender, otdel.name AS otdel,
-        role.name AS role FROM user INNER JOIN teacher ON
-        user.user_id=teacher.user_id ". "INNER JOIN gender ON
-        user.gender_id=gender.gender_id INNER JOIN otdel ON
-        teacher.otdel_id=otdel.otdel_id". " INNER JOIN role ON user.role_id=role.role_id LIMIT
-        $ofset, $limit");
+        $res = $this->db->query("SELECT teacher_secondary AS id, teacher_id as ids, u.lastname AS lastname, u.firstname AS firstname, u.patronymic AS patronymic, g.name as gender, birthday, education, category  FROM teacher 
+        INNER JOIN user u ON teacher.teacher_id = u.user_id
+        INNER JOIN genders g ON teacher.gender = g.gender_id ORDER BY teacher_secondary LIMIT $ofset, $limit");
         return $res->fetchAll(PDO::FETCH_OBJ);
     }
     public function count(){
