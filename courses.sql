@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Июн 12 2020 г., 18:55
+-- Время создания: Июн 13 2020 г., 15:01
 -- Версия сервера: 10.3.22-MariaDB
 -- Версия PHP: 7.1.33
 
@@ -193,7 +193,8 @@ INSERT INTO `student` (`student_id`, `student_secondary`, `dolzhnost_id`) VALUES
 (38, 14, 3),
 (39, 18, 3),
 (40, 20, 3),
-(43, 24, 3);
+(43, 24, 3),
+(44, 25, 1);
 
 -- --------------------------------------------------------
 
@@ -223,7 +224,8 @@ INSERT INTO `student_ticket` (`student_ticket_id`, `student_id`, `ticket_id`) VA
 (10, 36, 3),
 (11, 2, 7),
 (12, 40, 8),
-(13, 3, 9);
+(13, 3, 9),
+(14, 44, 1);
 
 -- --------------------------------------------------------
 
@@ -300,14 +302,14 @@ INSERT INTO `user` (`user_id`, `firstname`, `lastname`, `patronymic`) VALUES
 (1, 'Илья', 'Симон', 'Павлович'),
 (2, 'Ернияз', 'Есенжолов', 'Сейтжанович'),
 (3, 'Дмитрий', 'Боднарь', 'Максимович'),
-(4, 'Александр', 'Цапков', 'Валерьевич'),
+(4, 'Александр', 'Георгиев', 'Валерьевич'),
 (5, 'Ирина', 'Голубовская', 'Ярославна'),
 (6, 'Жан', 'Есенжолов', 'Арманович'),
 (7, 'Андрей', 'Тарасов', 'Андреевич'),
 (8, 'Лилия', 'Королева', 'Петрова'),
 (9, 'Виталий', 'Бенкс', 'Гаврилович'),
 (17, 'Андрей', 'Петров', 'Ульянович'),
-(18, 'Жан', 'Есенжолов', 'Арманович'),
+(18, 'Асхат', 'Алибеков', 'Асхатович'),
 (32, 'Зулифа', 'Амренова', 'Муслимовна'),
 (33, 'Teacher', 'Test', 'Testovich'),
 (34, 'Наиль', 'Галяветдинов', 'Боровски'),
@@ -317,9 +319,10 @@ INSERT INTO `user` (`user_id`, `firstname`, `lastname`, `patronymic`) VALUES
 (38, 'Эльнара', 'Есенжолова', 'Армановна'),
 (39, 'Болат', 'Габдуллин', 'Серикулы'),
 (40, 'Олжас', 'Сулейменов', 'Омарулы'),
-(41, 'Siebren', 'de Kuiper', 'Sigmovich'),
-(42, '456', '123', '789'),
-(43, 'СтуденИмя', 'СтуденФамилия', 'СтуденОтчество');
+(41, 'Siebren', 'de Kuiper', 'Waswani'),
+(42, 'Гулим', 'Кульбекова', 'Мухиденовна'),
+(43, 'СтуденИмя', 'СтуденФамилия', 'СтуденОтчество'),
+(44, 'Olivia', 'Colomar', 'Satia');
 
 --
 -- Индексы сохранённых таблиц
@@ -440,13 +443,13 @@ ALTER TABLE `pin`
 -- AUTO_INCREMENT для таблицы `student`
 --
 ALTER TABLE `student`
-  MODIFY `student_secondary` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `student_secondary` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT для таблицы `student_ticket`
 --
 ALTER TABLE `student_ticket`
-  MODIFY `student_ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `student_ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT для таблицы `teacher`
@@ -464,7 +467,7 @@ ALTER TABLE `ticket`
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
