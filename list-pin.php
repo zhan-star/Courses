@@ -33,8 +33,8 @@ require_once 'template/header.php';
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
                         <tr>
-                            <th>Преподаватель</th>
                             <th>Название курса</th>
+                            <th>Преподаватель</th> 
                             <th>Начало</th>
                             <th>Конец</th>
                         </tr>
@@ -56,9 +56,9 @@ require_once 'template/header.php';
                         while ($row2 = $result2->fetch_assoc()) {
                             $final2=$row2['course_id'];
                         }
-                            echo '<tr>';
-                            echo '<td><a href="view-teacher.php?id='.$final.'">'.$pin->fio.'</a></td>';
+                            echo '<tr>';       
                             echo '<td><a href="view-courses.php?id='.$final2.'">'.$pin->name.'</a></td>';
+                            echo '<td><a href="view-teacher.php?id='.$final.'">'.$pin->fio.'</a></td>';
                             echo '<td>'.$pin->datestart.'</td>';
                             echo '<td>'.$pin->dateend.'</td>';
                            

@@ -24,7 +24,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		text: "Статус заполненности наших групп"
 	},
 	subtitles: [{
-		text: "Июнь 2020"
+		text: "<?php echo date('F Y'); ?>"
 	}],
 	data: [{
 		type: "pie",
